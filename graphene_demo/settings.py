@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     'bootcamps'
 ]
 
+GRAPHENE = {
+    "SCHEMA": 'graphene_demo.schema.schema'
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
