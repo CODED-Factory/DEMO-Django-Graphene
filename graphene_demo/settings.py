@@ -54,6 +54,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'graphene_demo.urls'
 
+GRAPHENE = {
+    'SCHEMA': 'graphene_demo.schema.schema'
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
