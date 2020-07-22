@@ -133,11 +133,11 @@
             model = Instructor
     ```
 
-9. Add a `List` field
+9. Add an `instructors` query
 
    ```python
    class Query(object):
-     thing = graphene.DateTime()
+     ...
      instructors = graphene.List(InstructorType)
 
      ...
@@ -145,3 +145,18 @@
      def resolve_instructors(self, info):
          return Instructor.objects.all()
    ```
+
+10. Add a single `instructor` query
+
+    ```python
+    class Query(object):
+     ...
+     instructor = graphene.Field(InstructorType, id=graphene.Int())
+
+     ...
+
+     def resolve_instructor(self, info, id):
+        if id is not None:
+            return Instructor.objects.get(pk=id)
+        return None
+    ```
