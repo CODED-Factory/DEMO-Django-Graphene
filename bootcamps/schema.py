@@ -1,8 +1,13 @@
 from datetime import datetime
-import graphene
-from graphene_django import DjangoObjectType
+from graphene import DateTime, List, Field, Int
+from graphene_django import DjangoObjectType, DjangoListField
 
-from .models import Instructor
+from .models import Instructor, Cohort
+
+
+class CohortType(DjangoObjectType):
+    class Meta:
+        model = Cohort
 
 
 class InstructorType(DjangoObjectType):
@@ -11,15 +16,12 @@ class InstructorType(DjangoObjectType):
 
 
 class Query(object):
-    thing = graphene.DateTime()
-    instructors = graphene.List(InstructorType)
-    instructor = graphene.Field(InstructorType, id=graphene.Int())
+    thing = DateTime()
+    instructors = DjangoListField(InstructorType)
+    instructor = Field(InstructorType, id=Int())
 
     def resolve_thing(self, info):
         return datetime.now()
-
-    def resolve_instructors(self, info):
-        return Instructor.objects.all()
 
     def resolve_instructor(self, info, id):
         if id is not None:

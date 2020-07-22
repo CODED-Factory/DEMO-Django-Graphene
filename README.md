@@ -160,3 +160,34 @@
             return Instructor.objects.get(pk=id)
         return None
     ```
+
+11. Simplify using `DjangoListField`
+
+    ```python
+    from graphene_django import DjangoObjectType, DjangoListField
+
+    ...
+
+    class Query(object):
+
+      instructors = DjangoListField(InstructorType)
+
+          def resolve_thing(self, info):
+              ...
+
+          # resolver can be deleted
+          # def resolve_instructors(self, infor):
+
+          def resolve_instructor(self, info, id):
+              ...
+    ```
+
+12. Automagic Relationships! 💖
+
+    ```python
+    from .models import Instructor, Cohort
+
+    class CohortType(DjangoObjectType):
+      class Meta:
+          model = Cohort
+    ```
