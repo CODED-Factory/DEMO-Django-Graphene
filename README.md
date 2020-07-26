@@ -1,6 +1,7 @@
 # Django Graphene
 
 [Slides](https://docs.google.com/presentation/d/1VSIVg2qiLdnCGM2CWiNykEeSzUyJgF-e7iVEyTHdHCA/edit?usp=sharing)
+
 [Recording](https://youtu.be/MNHc0j8PDnE)
 
 ### Setup
