@@ -4,6 +4,9 @@ astroid==2.4.2
 autopep8==1.5.3
 Django==3.0.8
 django-cors-headers==3.4.0
+django-filter==2.4.0
+django-graphql-auth==0.3.14
+django-graphql-jwt==0.3.0
 graphene==2.1.8
 graphene-django==2.12.1
 graphql-core==2.3.2
@@ -14,6 +17,7 @@ mccabe==0.6.1
 Pillow==7.2.0
 promise==2.3
 pycodestyle==2.6.0
+PyJWT==1.7.1
 pylint==2.5.3
 pytz==2020.1
 Rx==1.6.1

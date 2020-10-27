@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,8 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'graphene_django',
-    'bootcamps'
+    'graphql_auth',
+    'bootcamps',
+    'users'
 ]
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 GRAPHENE = {
     "SCHEMA": 'graphene_demo.schema.schema'
@@ -59,8 +65,38 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'graphene_demo.urls'
 
 GRAPHENE = {
-    'SCHEMA': 'graphene_demo.schema.schema'
+    'SCHEMA': 'graphene_demo.schema.schema',
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+    ],
 }
+
+GRAPHQL_JWT = {
+    "JWT_ALLOW_ANY_CLASSES": [
+        "graphql_auth.mutations.ObtainJSONWebToken",
+    ],
+    "JWT_VERIFY_EXPIRATION": True,
+    "JWT_AUTH_HEADER_PREFIX": "BEARER",
+    'JWT_EXPIRATION_DELTA': timedelta(hours=24),
+}
+
+GRAPHQL_AUTH = {
+    "LOGIN_ALLOWED_FIELDS": ["email"],
+    "REGISTER_MUTATION_FIELDS": ["email"],
+    "SEND_ACTIVATION_EMAIL": False,
+    "USER_NODE_FILTER_FIELDS": {
+        "email": ["exact", ],
+        "is_active": ["exact"],
+        "status__archived": ["exact"],
+        "status__verified": ["exact"],
+        "status__secondary_email": ["exact"],
+    },
+}
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_auth.backends.GraphQLAuthBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 
 TEMPLATES = [
     {

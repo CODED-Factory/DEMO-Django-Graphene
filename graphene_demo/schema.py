@@ -1,17 +1,18 @@
-import graphene
+from graphene import ObjectType, Schema
 
-import bootcamps.schema
+from graphql_auth.schema import MeQuery
+from graphql_auth import mutations
 
-
-class Query(bootcamps.schema.Query, graphene.ObjectType):
-    hello = graphene.String(name=graphene.String(default_value="world"))
-    goodbye = graphene.String()
-
-    def resolve_hello(self, info, name):
-        return f"Hello {name}!"
-
-    def resolve_goodbye(self, info):
-        return "Goodbye cruel world!"
+from bootcamps.schema import Query as BootcampQuery
 
 
-schema = graphene.Schema(query=Query)
+class Query(MeQuery, BootcampQuery, ObjectType):
+    pass
+
+
+class Mutation(ObjectType):
+    register = mutations.Register.Field()
+    login = mutations.ObtainJSONWebToken.Field()
+
+
+schema = Schema(query=Query, mutation=Mutation)
